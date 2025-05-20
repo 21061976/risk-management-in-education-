@@ -1,1 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>כלי מקצועי לניהול סיכונים בפרויקטים חינוכיים חדשניים</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    h1, h2, h3, h4 {
+      color: #0056b3;
+      margin-top: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    
+    .tab-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .tab-buttons {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    .tab-button {
+      background-color: #f2f2f2;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 12px 16px;
+      transition: 0.3s;
+      font-size: 16px;
+      border-radius: 5px 5px 0 0;
+      margin-left: 5px;
+    }
+    
+    .tab-button:hover {
+      background-color: #ddd;
+    }
+    
+    .tab-button.active {
+      background-color: #0056b3;
+      color: white;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 0 0 5px 5px;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: #0056b3;
+      outline: none;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    button {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #003d82;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: right;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .risk-high {
+      background-color: #ffcccc;
+    }
+    
+    .risk-medium {
+      background-color: #fff2cc;
+    }
+    
+    .risk-low {
+      background-color: #e6ffe6;
+    }
+    
+    .section {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: white;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .info-box {
+      background-color: #e6f7ff;
+      border-right: 4px solid #0056b3;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    
+    .step-box {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+      position: relative;
+    }
+    
+    .step-number {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #0056b3;
+      color: white;
+      text-align: center;
+      line-height: 30px;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    
+    .innovation-rating {
+      width: 100px;
+    }
+    
+    .help-icon {
+      cursor: help;
+      color: #0056b3;
+      margin-right: 5px;
+    }
+    
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 300px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      top: 125%;
+      right: 0;
+      margin-right: -150px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
 
+    /* Matrix styles */
+    .risk-matrix {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      grid-gap: 2px;
+      margin: 20px 0;
+    }
+    
+    .matrix-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .matrix-header {
+      background-color: #f2f2f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    .matrix-high {
+      background-color: #ffcccc;
+    }
+    
+    .matrix-medium {
+      background-color: #fff2cc;
+    }
+    
+    .matrix-low {
+      background-color: #e6ffe6;
+    }
+    
+    .risk-point {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #0056b3;
+      position: absolute;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background-color: white;
+        padding: 0;
+      }
+      
+      .container {
+        box-shadow: none;
+        padding: 0;
+      }
+      
+      .tab-buttons, button, .no-print {
+        display: none !important;
+      }
+      
+      .tab-content {
+        display: block !important;
+        border: none;
+        padding: 0;
+      }
+      
+      .section {
+        page-break-inside: avoid;
+        border: none;
+        margin-bottom: 30px;
+      }
+      
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>כלי מקצועי לניהול סיכונים בפרויקטים חינוכיים חדשניים</h1>
+    
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="tab-button active" onclick="openTab(event, 'tab1')">הגדרת הפרויקט</button>
+        <button class="tab-button" onclick="openTab(event, 'tab2')">ניהול סיכונים</button>
+        <button class="tab-button" onclick="openTab(event, 'tab3')">אסדרת חדשנות</button>
+        <button class="tab-button" onclick="openTab(event, 'tab4')">תוכנית התמודדות</button>
+        <button class="tab-button" onclick="openTab(event, 'tab5')">דוח מסכם</button>
+      </div>
+      
+      <!-- לשונית 1: הגדרת הפרויקט -->
+      <div id="tab1" class="tab-content active">
+        <div class="section">
+          <h2>פרטי הפרויקט</h2>
+          
+          <div class="info-box">
+            <p>
+              <strong>מטרת הכלי:</strong> כלי זה מיועד לניהול סיכונים בפרויקטים חינוכיים חדשניים, בהתאם לחוזר מנכ"ל לאסדרת חדשנות חינוכית והנחיות משרד החינוך. הכלי מאפשר זיהוי, ניתוח, הערכה וקביעת אסטרטגיות להתמודדות עם סיכונים, וכן בחינת רמת החדשנות והתאמתה לדרישות האסדרה.
+            </p>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectName">שם הפרויקט: <span class="help-icon tooltip">?<span class="tooltiptext">יש לרשום את שם הפרויקט החינוכי החדשני</span></span></label>
+            <input type="text" id="projectName" placeholder="הזן את שם הפרויקט">
+          </div>
+          
+          <div class="form-group">
+            <label for="projectManager">מנהל הפרויקט:</label>
+            <input type="text" id="projectManager" placeholder="הזן את שם מנהל הפרויקט">
+          </div>
+          
+          <div class="form-group">
+            <label for="organizationName">שם המוסד החינוכי/הארגון:</label>
+            <input type="text" id="organizationName" placeholder="הזן את שם המוסד החינוכי או הארגון">
+          </div>
+          
+          <div class="form-group">
+            <label for="projectType">סוג הפרויקט:</label>
+            <select id="projectType">
+              <option value="">-- בחר סוג פרויקט --</option>
+              <option value="pedagogic">פרויקט פדגוגי</option>
+              <option value="technological">פרויקט טכנולוגי</option>
+              <option value="organizational">פרויקט ארגוני</option>
+              <option value="combined">פרויקט משולב</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectDesc">תיאור הפרויקט: <span class="help-icon tooltip">?<span class="tooltiptext">יש לתאר בפירוט את מהות הפרויקט החדשני, מטרותיו ויעדיו</span></span></label>
+            <textarea id="projectDesc" placeholder="תאר את הפרויקט, מטרותיו, ההקשר והרקע לפיתוחו"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectScope">היקף הפרויקט:</label>
+            <select id="projectScope">
+              <option value="">-- בחר היקף --</option>
+              <option value="classroom">כיתתי</option>
+              <option value="school">בית-ספרי</option>
+              <option value="regional">אזורי/רשותי</option>
+              <option value="national">ארצי</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectTimeline">לוח זמנים:</label>
+            <div style="display: flex; gap: 10px;">
+              <div style="flex: 1;">
+                <label for="startDate" style="font-weight: normal;">תאריך התחלה:</label>
+                <input type="date" id="startDate">
+              </div>
+              <div style="flex: 1;">
+                <label for="endDate" style="font-weight: normal;">תאריך סיום משוער:</label>
+                <input type="date" id="endDate">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="stakeholders">בעלי עניין מרכזיים:</label>
+            <textarea id="stakeholders" placeholder="רשימת בעלי העניין המרכזיים בפרויקט (צוות חינוכי, הורים, תלמידים, גורמי משרד החינוך, רשות מקומית וכד')"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="expectedOutcomes">תוצרים מצופים:</label>
+            <textarea id="expectedOutcomes" placeholder="פרט את התוצרים המצופים מהפרויקט"></textarea>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2>מסגרת לניהול סיכונים</h2>
+          
+          <div class="step-box">
+            <span class="step-number">1</span>
+            <strong>זיהוי סיכונים</strong> - מיפוי הסיכונים האפשריים בפרויקט
+          </div>
+          
+          <div class="step-box">
+            <span class="step-number">2</span>
+            <strong>ניתוח והערכת סיכונים</strong> - ניתוח הסיכונים לפי הסתברות להתרחשותם ועוצמת הנזק
+          </div>
+          
+          <div class="step-box">
+            <span class="step-number">3</span>
+            <strong>קביעת אסטרטגיות להתמודדות</strong> - תכנון פעולות למניעה, הפחתה או התמודדות עם הסיכונים
+          </div>
+          
+          <div class="step-box">
+            <span class="step-number">4</span>
+            <strong>בקרה ומעקב</strong> - מעקב שוטף אחר הסיכונים ויעילות האסטרטגיות
+          </div>
+        </div>
+        
+        <button onclick="goToTab('tab2')">המשך לניהול סיכונים</button>
+      </div>
+      
+      <!-- לשונית 2: ניהול סיכונים -->
+      <div id="tab2" class="tab-content">
+        <div class="section">
+          <h2>טבלת ניהול סיכונים</h2>
+          
+          <div class="info-box">
+            <p><strong>הנחיות:</strong> זהה את הסיכונים העיקריים בפרויקט, הערך את הסתברותם ואת עוצמת הנזק האפשרי שלהם בסולם של 1-10, כאשר 1 = נמוך מאוד, ו-10 = גבוה מאוד. דרגת החומרה תחושב אוטומטית (הסתברות × עוצמת נזק).</p>
+          </div>
+          
+          <div class="card">
+            <h3>מטריצת סיכונים</h3>
+            <div class="risk-matrix">
+              <!-- Header row -->
+              <div class="matrix-cell matrix-header"></div>
+              <div class="matrix-cell matrix-header">הסתברות</div>
+              <!-- Header values for probability -->
+              <div class="matrix-cell matrix-header">1</div>
+              <div class="matrix-cell matrix-header">2</div>
+              <div class="matrix-cell matrix-header">3</div>
+              <div class="matrix-cell matrix-header">4</div>
+              <div class="matrix-cell matrix-header">5</div>
+              <div class="matrix-cell matrix-header">6</div>
+              <div class="matrix-cell matrix-header">7</div>
+              <div class="matrix-cell matrix-header">8</div>
+              <div class="matrix-cell matrix-header">9</div>
+              <div class="matrix-cell matrix-header">10</div>
+              
+              <!-- Matrix values -->
+              <!-- שורות מטריצה כאן -->
+            </div>
+            
+            <div style="margin-top: 10px; text-align: center;">
+              <span style="display: inline-block; width: 20px; height: 10px; background-color: #ffcccc; margin-left: 5px;"></span> סיכון גבוה (36-100)
+              <span style="display: inline-block; width: 20px; height: 10px; background-color: #fff2cc; margin-right: 15px; margin-left: 5px;"></span> סיכון בינוני (12-35)
+              <span style="display: inline-block; width: 20px; height: 10px; background-color: #e6ffe6; margin-right: 15px; margin-left: 5px;"></span> סיכון נמוך (1-11)
+            </div>
+          </div>
+          
+          <table id="riskTable">
+            <thead>
+              <tr>
+                <th style="width: 15%;">קטגוריה</th>
+                <th style="width: 20%;">תיאור הסיכון</th>
+                <th style="width: 20%;">השלכות</th>
+                <th style="width: 10%;">הסתברות (1-10)</th>
+                <th style="width: 10%;">נזק צפוי (1-10)</th>
+                <th style="width: 10%;">חומרה</th>
+                <th style="width: 15%;">פעולות</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- שורה לדוגמה -->
+              <tr>
+                <td>
+                  <select class="risk-category">
+                    <option value="תוכן ותכנים">תוכן ותכנים</option>
+                    <option value="כשירות צוות">כשירות צוות</option>
+                    <option value="מקצוענות">מקצוענות</option>
+                    <option value="ארגון ותכנון">ארגון ותכנון</option>
+                    <option value="תשתיות">תשתיות</option>
+                    <option value="טכנולוגיה">טכנולוגיה</option>
+                    <option value="תקציב">תקציב</option>
+                    <option value="רגולציה">רגולציה</option>
+                    <option value="שיתוף פעולה">שיתוף פעולה</option>
+                    <option value="אחר">אחר</option>
+                  </select>
+                </td>
+                <td><input type="text" class="risk-description" placeholder="תיאור הסיכון"></td>
+                <td><input type="text" class="risk-impacts" placeholder="השלכות אפשריות"></td>
+                <td><input type="number" min="1" max="10" value="1" class="risk-probability" onchange="calculateSeverity(this)"></td>
+                <td><input type="number" min="1" max="10" value="1" class="risk-impact" onchange="calculateSeverity(this)"></td>
+                <td class="risk-severity">1</td>
+                <td><button onclick="removeRow(this)">הסר</button></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <button onclick="addRow()">הוסף שורת סיכון</button>
+          
+          <div style="margin-top: 20px;">
+            <h3>דוגמאות לסיכונים בפרויקטים חינוכיים חדשניים:</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <button onclick="addExampleRisk('כשירות צוות', 'חוסר הכשרה מספקת לצוות המורים', 'יישום לא אפקטיבי של התוכנית החדשנית', 6, 7)">דוגמה: כשירות צוות</button>
+              <button onclick="addExampleRisk('טכנולוגיה', 'בעיות טכניות בפלטפורמה הדיגיטלית', 'עיכוב בלוחות הזמנים ותסכול משתמשים', 5, 6)">דוגמה: טכנולוגיה</button>
+              <button onclick="addExampleRisk('תקציב', 'חריגה מהתקציב המתוכנן', 'צמצום היקף הפרויקט או איכותו', 4, 8)">דוגמה: תקציב</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- לשוניות נוספות כאן -->
+      
+    </div>
+  </div>
+
+  <script>
+    // Function to open a specific tab
+    function openTab(evt, tabId) {
+      // Hide all tab content
+      var tabContents = document.getElementsByClassName("tab-content");
+      for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove("active");
+      }
+      
+      // Remove active class from all tab buttons
+      var tabButtons = document.getElementsByClassName("tab-button");
+      for (var i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].classList.remove("active");
+      }
+      
+      // Show the selected tab and mark its button as active
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+
+    // Function to navigate directly to a specific tab
+    function goToTab(tabId) {
+      // Create a mock event with a currentTarget property
+      var mockEvent = {
+        currentTarget: document.querySelector(`.tab-button[onclick*="${tabId}"]`)
+      };
+      
+      // Call the openTab function with this mock event
+      openTab(mockEvent, tabId);
+    }
+
+    // Function to calculate risk severity
+    function calculateSeverity(input) {
+      var row = input.closest("tr");
+      var probability = parseInt(row.querySelector(".risk-probability").value);
+      var impact = parseInt(row.querySelector(".risk-impact").value);
+      var severity = probability * impact;
+      var severityCell = row.querySelector(".risk-severity");
+      
+      severityCell.textContent = severity;
+      
+      // Update row color based on severity
+      row.classList.remove("risk-high", "risk-medium", "risk-low");
+      if (severity >= 36) {
+        row.classList.add("risk-high");
+      } else if (severity >= 12) {
+        row.classList.add("risk-medium");
+      } else {
+        row.classList.add("risk-low");
+      }
+    }
+
+    // Function to add a new risk row to the table
+    function addRow() {
+      var table = document.getElementById("riskTable").getElementsByTagName("tbody")[0];
+      var newRow = table.insertRow();
+      
+      newRow.innerHTML = `
+        <td>
+          <select class="risk-category">
+            <option value="תוכן ותכנים">תוכן ותכנים</option>
+            <option value="כשירות צוות">כשירות צוות</option>
+            <option value="מקצוענות">מקצוענות</option>
+            <option value="ארגון ותכנון">ארגון ותכנון</option>
+            <option value="תשתיות">תשתיות</option>
+            <option value="טכנולוגיה">טכנולוגיה</option>
+            <option value="תקציב">תקציב</option>
+            <option value="רגולציה">רגולציה</option>
+            <option value="שיתוף פעולה">שיתוף פעולה</option>
+            <option value="אחר">אחר</option>
+          </select>
+        </td>
+        <td><input type="text" class="risk-description" placeholder="תיאור הסיכון"></td>
+        <td><input type="text" class="risk-impacts" placeholder="השלכות אפשריות"></td>
+        <td><input type="number" min="1" max="10" value="1" class="risk-probability" onchange="calculateSeverity(this)"></td>
+        <td><input type="number" min="1" max="10" value="1" class="risk-impact" onchange="calculateSeverity(this)"></td>
+        <td class="risk-severity">1</td>
+        <td><button onclick="removeRow(this)">הסר</button></td>
+      `;
+    }
+
+    // Function to remove a risk row
+    function removeRow(button) {
+      var row = button.closest("tr");
+      row.parentNode.removeChild(row);
+    }
+
+    // Function to add example risk
+    function addExampleRisk(category, description, impacts, probability = 5, impact = 5) {
+      var table = document.getElementById("riskTable").getElementsByTagName("tbody")[0];
+      var newRow = table.insertRow();
+      
+      newRow.innerHTML = `
+        <td>
+          <select class="risk-category">
+            <option value="תוכן ותכנים" ${category === "תוכן ותכנים" ? "selected" : ""}>תוכן ותכנים</option>
+            <option value="כשירות צוות" ${category === "כשירות צוות" ? "selected" : ""}>כשירות צוות</option>
+            <option value="מקצוענות" ${category === "מקצוענות" ? "selected" : ""}>מקצוענות</option>
+            <option value="ארגון ותכנון" ${category === "ארגון ותכנון" ? "selected" : ""}>ארגון ותכנון</option>
+            <option value="תשתיות" ${category === "תשתיות" ? "selected" : ""}>תשתיות</option>
+            <option value="טכנולוגיה" ${category === "טכנולוגיה" ? "selected" : ""}>טכנולוגיה</option>
+            <option value="תקציב" ${category === "תקציב" ? "selected" : ""}>תקציב</option>
+            <option value="רגולציה" ${category === "רגולציה" ? "selected" : ""}>רגולציה</option>
+            <option value="שיתוף פעולה" ${category === "שיתוף פעולה" ? "selected" : ""}>שיתוף פעולה</option>
+            <option value="אחר" ${category === "אחר" ? "selected" : ""}>אחר</option>
+          </select>
+        </td>
+        <td><input type="text" class="risk-description" value="${description}"></td>
+        <td><input type="text" class="risk-impacts" value="${impacts}"></td>
+        <td><input type="number" min="1" max="10" value="${probability}" class="risk-probability" onchange="calculateSeverity(this)"></td>
+        <td><input type="number" min="1" max="10" value="${impact}" class="risk-impact" onchange="calculateSeverity(this)"></td>
+        <td class="risk-severity">${probability * impact}</td>
+        <td><button onclick="removeRow(this)">הסר</button></td>
+      `;
+      
+      // Apply coloring based on severity
+      var severity = probability * impact;
+      if (severity >= 36) {
+        newRow.classList.add("risk-high");
+      } else if (severity >= 12) {
+        newRow.classList.add("risk-medium");
+      } else {
+        newRow.classList.add("risk-low");
+      }
+    }
+
+    // Initialize when the page loads
+    document.addEventListener("DOMContentLoaded", function() {
+      // By default, the first tab is already active
+      // You can add additional initialization here if needed
+    });
+  </script>
+</body>
+</html>
